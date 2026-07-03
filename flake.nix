@@ -76,5 +76,8 @@
     darwinConfigurations."studio" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
+    darwinConfigurations."air" = nix-darwin.lib.darwinSystem {
+      modules = [ configuration ];
+    };
   };
 }
