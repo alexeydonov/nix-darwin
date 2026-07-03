@@ -25,11 +25,32 @@
           pkgs.fd
           pkgs.btop
           pkgs.yazi
+          pkgs.mc
           pkgs.p7zip
           pkgs.ffmpeg
           pkgs.yt-dlp
+          pkgs.nerd-fonts.jetbrains-mono
+          pkgs.podman
         ];
 
+      environment.shellAliases =
+      {
+        "lg" = "lazygit";
+        "e" = "nvim";
+        ".." = "cd ..";
+        "..." = "cd ...";
+        "ls" = "eza --icons=auto --git --group --time-style=long-iso";
+        "l" = "ls --long";
+        "ll" = "l -a";
+        "rebuild" = "sudo darwin-rebuild switch";
+      };
+
+      environment.variables =
+      {
+        EDITOR = "nvim";
+      };
+
+      # nix-darwin will be upset when this is true
       nix.enable = false;
 
       # Necessary for using flakes on this system.
