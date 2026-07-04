@@ -10,27 +10,26 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs }:
   let
     configuration = { pkgs, ... }: {
-      environment.systemPackages =
-        [
-          pkgs.neovim
-          pkgs.git
-          pkgs.gh
-          pkgs.lazygit
-          pkgs.stow
-          pkgs.fastfetch
-          pkgs.zoxide
-          pkgs.eza
-          pkgs.bat
-          pkgs.fzf
-          pkgs.fd
-          pkgs.btop
-          pkgs.yazi
-          pkgs.mc
-          pkgs.p7zip
-          pkgs.ffmpeg
-          pkgs.yt-dlp
-          pkgs.nerd-fonts.jetbrains-mono
-          pkgs.podman
+      environment.systemPackages = with pkgs; [
+          neovim
+          git
+          gh
+          lazygit
+          stow
+          fastfetch
+          zoxide
+          eza
+          bat
+          fzf
+          fd
+          btop
+          yazi
+          mc
+          p7zip
+          ffmpeg
+          yt-dlp
+          nerd-fonts.jetbrains-mono
+          podman
         ];
 
       environment.shellAliases =
