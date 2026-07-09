@@ -11,29 +11,28 @@
   let
     configuration = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
-          neovim
-          git
-          gh
-          lazygit
-          stow
-          fastfetch
-          zoxide
-          eza
-          bat
-          fzf
-          fd
-          btop
-          yazi
-          mc
-          p7zip
-          ffmpeg
-          yt-dlp
-          nerd-fonts.jetbrains-mono
-          podman
-        ];
+        neovim
+        git
+        gh
+        lazygit
+        stow
+        fastfetch
+        zoxide
+        eza
+        bat
+        fzf
+        fd
+        btop
+        yazi
+        mc
+        p7zip
+        ffmpeg
+        yt-dlp
+        podman
+        nerd-fonts.jetbrains-mono
+      ];
 
-      environment.shellAliases =
-      {
+      environment.shellAliases = {
         "lg" = "lazygit";
         "e" = "nvim";
         ".." = "cd ..";
@@ -42,12 +41,16 @@
         "l" = "ls --long";
         "ll" = "l -a";
         "rebuild" = "sudo darwin-rebuild switch";
+        "update" = "do nix flake update --flake /etc/nix-darwin";
       };
 
-      environment.variables =
-      {
+      environment.variables = {
         EDITOR = "nvim";
       };
+
+      fonts.packages = [
+        pkgs.nerd-fonts.jetbrains-mono
+      ];
 
       # nix-darwin will be upset when this is true
       nix.enable = false;
