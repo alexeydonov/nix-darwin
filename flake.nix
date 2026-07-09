@@ -32,7 +32,13 @@
         nerd-fonts.jetbrains-mono
       ];
 
-      environment.shellAliases = {
+      programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+
+      environment.shellAliases =
+      {
         "lg" = "lazygit";
         "e" = "nvim";
         ".." = "cd ..";
