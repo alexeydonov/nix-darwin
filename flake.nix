@@ -42,12 +42,12 @@
         "lg" = "lazygit";
         "e" = "nvim";
         ".." = "cd ..";
-        "..." = "cd ...";
+        "..." = "cd ../..";
         "ls" = "eza --icons=auto --git --group --time-style=long-iso";
         "l" = "ls --long";
         "ll" = "l -a";
         "rebuild" = "sudo darwin-rebuild switch";
-        "update" = "do nix flake update --flake /etc/nix-darwin";
+        "update" = "sudo nix flake update --flake /etc/nix-darwin";
       };
 
       environment.variables = {
