@@ -11,7 +11,12 @@
   let
     configuration = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
+        # Desktop apps
         ghostty-bin
+        # qutebrowser
+        jetbrains.webstorm
+        # CLI
+        claude-code
         neovim
         git
         gh
@@ -30,6 +35,7 @@
         ffmpeg
         yt-dlp
         podman
+        # Fonts
         nerd-fonts.jetbrains-mono
       ];
 
@@ -74,6 +80,8 @@
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
       system.stateVersion = 6;
+
+      nixpkgs.config.allowUnfree = true;
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
