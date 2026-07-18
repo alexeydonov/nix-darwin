@@ -20,6 +20,7 @@
         neovim
         git
         gh
+        envsubst
         lazygit
         stow
         fastfetch
