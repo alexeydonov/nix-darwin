@@ -20,7 +20,6 @@
         neovim
         git
         gh
-        envsubst
         lazygit
         stow
         fastfetch
@@ -36,6 +35,7 @@
         ffmpeg
         yt-dlp
         podman
+        devenv
         # Fonts
         nerd-fonts.jetbrains-mono
       ];
@@ -54,7 +54,7 @@
         "ls" = "eza --icons=auto --git --group --time-style=long-iso";
         "l" = "ls --long";
         "ll" = "l -a";
-        "rebuild" = "sudo darwin-rebuild switch";
+        "switch" = "sudo darwin-rebuild switch";
         "update" = "sudo nix flake update --flake /etc/nix-darwin";
       };
 
