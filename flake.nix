@@ -13,7 +13,6 @@
       environment.systemPackages = with pkgs; [
         # Desktop apps
         ghostty-bin
-        vscode
         jetbrains.webstorm
         # CLI
         claude-code
