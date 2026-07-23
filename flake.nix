@@ -3,11 +3,18 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nvf.url = "github:notashelf/nvf";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nixpkgs, darwin, stylix, nvf }:
   let
     configuration = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
@@ -16,7 +23,6 @@
         jetbrains.webstorm
         # CLI
         claude-code
-        neovim
         git
         gh
         lazygit
@@ -44,8 +50,76 @@
         enableZshIntegration = true;
       };
 
-      environment.shellAliases =
-      {
+      programs.nvf = {
+        enable = true;
+        settings = {
+          vim = {
+            viAlias = true;
+            vimAlias = true;
+            syntaxHighlighting = true;
+            options = {
+              # tab settings
+              tabstop = 2;
+              shiftwidth = 2;
+              softtabstop = 2;
+              expandtab = true;
+              shiftround = true;
+              autoindent = true;
+              smartindent = true;
+
+              number = true;
+              relativenumber = true;
+              cursorline = true;
+            };
+            formatter = {
+              conform-nvim.enable = true;
+            };
+            visuals = {
+              indent-blankline = {
+                enable = true;
+                setupOpts = {
+                  indent = {
+                    char = "▏";
+                    tab_char = "▏";
+                  };
+                  scope = {
+                    enabled = true;
+                    show_start = true;
+                    show_end = false;
+                  };
+                };
+              };
+            };
+            statusline.lualine = {
+              enable = true;
+            };
+            ui = {
+              ui2.enable = true;
+            };
+            languages = {
+              enableFormat = true;
+              enableTreesitter = true;
+              docker.enable = true;
+              env.enable = true;
+              json.enable = true;
+              markdown.enable = true;
+              nix.enable = true;
+              yaml.enable = true;
+              zsh.enable = true;
+            };
+            lsp = {
+              enable = true;
+            };
+          };
+        };
+      };
+
+      stylix = {
+        enable = true;
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      };
+
+      environment.shellAliases = {
         "lg" = "lazygit";
         "e" = "nvim";
         ".." = "cd ..";
@@ -71,9 +145,6 @@
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
 
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -90,11 +161,19 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#studio
-    darwinConfigurations."studio" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+    darwinConfigurations."studio" = darwin.lib.darwinSystem {
+      modules = [
+        nvf.darwinModules.default
+        stylix.darwinModules.stylix
+        configuration
+      ];
     };
-    darwinConfigurations."air" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+    darwinConfigurations."air" = darwin.lib.darwinSystem {
+      modules = [
+        nvf.darwinModules.default
+        stylix.darwinModules.stylix
+        configuration
+      ];
     };
   };
 }
